@@ -30,9 +30,33 @@ test("place submarine horizontally in gameboard", () => {
   const initialPosition = [1, 1];
   expect(gameBoard.placeShip("submarine", initialPosition)).toStrictEqual([
     [1, 1],
-    [1, 2],
-    [1, 3],
+    [2, 1],
+    [3, 1],
   ]);
 });
 
-// test("place carrier in ga");
+test("place carrier vertically in gameboard", () => {
+  const gameBoard = gameBoardFactory();
+  gameBoard.setShipDirection("vertical");
+  const initialPosition = [2, 2];
+  expect(gameBoard.placeShip("carrier", initialPosition)).toStrictEqual([
+    [2, 2],
+    [2, 3],
+    [2, 4],
+    [2, 5],
+    [2, 6],
+  ]);
+});
+test("place ship out of boundary", () => {
+  const gameBoard = gameBoardFactory();
+  gameBoard.setShipDirection("horizontal");
+  const initialPosition = [1, 7];
+  expect(gameBoard.placeShip("carrier", initialPosition)).toBe("Not valid");
+});
+test("receive attack", () => {
+  const gameBoard = gameBoardFactory();
+  gameBoard.setShipDirection("vertical");
+  const initialPosition = [2, 2];
+  gameBoard.placeShip("carrier", initialPosition);
+  expect(gameBoard.receiveAttack([2, 5])).toBe("Hit");
+});

@@ -24,36 +24,36 @@ function shipFactory(name) {
     hitPositions.push([x, y]);
     return hitPositions[hitPositions.length - 1];
   };
-  //   const shipInitialCoordinates = [1, 1];
-  //   const shipDirection = "horizontal";
-  //   const shipCoordinates = [];
+  /*   const shipInitialCoordinates = [1, 1];
+    const shipDirection = "horizontal";
+    const shipCoordinates = [];
 
-  //   if (shipDirection === "horizontal") {
-  //     let i = 0;
-  //     while (i < length) {
-  //       shipCoordinates.push(
-  //         shipInitialCoordinates.map((item, index) => {
-  //           if (index === 1) {
-  //             return item + i;
-  //           } else return item;
-  //         })
-  //       );
-  //       i++;
-  //     }
-  //   } else if (shipDirection === "vertical") {
-  //     let i = 0;
-  //     while (i < length) {
-  //       shipCoordinates.push(
-  //         shipInitialCoordinates.map((item, index) => {
-  //           if (index === 0) {
-  //             return item + 1;
-  //           } else {
-  //             return item;
-  //           }
-  //         })
-  //       );
-  //     }
-  //   }
+    if (shipDirection === "horizontal") {
+      let i = 0;
+      while (i < length) {
+        shipCoordinates.push(
+          shipInitialCoordinates.map((item, index) => {
+            if (index === 1) {
+              return item + i;
+            } else return item;
+          })
+        );
+        i++;
+      }
+    } else if (shipDirection === "vertical") {
+      let i = 0;
+      while (i < length) {
+        shipCoordinates.push(
+          shipInitialCoordinates.map((item, index) => {
+            if (index === 0) {
+              return item + 1;
+            } else {
+              return item;
+            }
+          })
+        );
+      }
+    } */
 
   const isSunk = (shipCoordinates) => {
     if (JSON.stringify(hitPositions) === JSON.stringify(shipCoordinates)) {
@@ -72,32 +72,40 @@ function gameBoardFactory() {
     return (shipDirection = direction);
   };
 
+  const shipCoordinates = [];
   const placeShip = (shipName, initialPosition) => {
     const ship = shipFactory(shipName);
     const shipLength = ship.length;
-    const shipCoordinates = [];
-
-    if (shipDirection === "vertical") {
+    if (
+      shipLength + initialPosition[0] > 10 ||
+      shipLength + initialPosition[1] > 10
+    ) {
+      return "Not valid";
+    }
+    if (shipDirection === "horizontal") {
       let i = 0;
       while (i < shipLength) {
         shipCoordinates.push(
           initialPosition.map((item, index) => {
             if (index === 0) {
-              return item + 1;
+              return item + i;
             } else {
               return item;
             }
           })
         );
+        i++;
       }
-    } else if (shipDirection === "horizontal") {
+    } else if (shipDirection === "vertical") {
       let i = 0;
       while (i < shipLength) {
         shipCoordinates.push(
           initialPosition.map((item, index) => {
             if (index === 1) {
               return item + i;
-            } else return item;
+            } else {
+              return item;
+            }
           })
         );
         i++;
@@ -105,7 +113,17 @@ function gameBoardFactory() {
     }
     return shipCoordinates;
   };
-  return { setShipDirection, placeShip };
+
+  const receiveAttack = (coordinates) => {
+    let solution = "";
+    shipCoordinates.forEach((item) => {
+      if (JSON.stringify(item) === JSON.stringify(coordinates)) {
+        solution = "Hit";
+      }
+    });
+    return solution;
+  };
+  return { setShipDirection, placeShip, receiveAttack };
 }
 
 export { shipFactory, gameBoardFactory };
