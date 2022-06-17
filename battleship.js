@@ -67,6 +67,14 @@ function shipFactory(name) {
 }
 
 function gameBoardFactory() {
+  // create gameBoard Array
+  const gameBoard = [];
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      gameBoard.push([i, j]);
+    }
+  }
+
   let shipDirection = "";
   const setShipDirection = (direction) => {
     return (shipDirection = direction);
