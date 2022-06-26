@@ -1,4 +1,4 @@
-let shipList = [];
+// let shipList = [];
 function shipFactory(name) {
   let length;
   switch (name) {
@@ -70,17 +70,17 @@ function shipFactory(name) {
       return false;
     }
   };
-  shipList.push({ id, length, hit, isSunk, hitPositions });
+  // shipList.push({ id, length, hit, isSunk, hitPositions });
   return { id, length, hit, isSunk };
 }
 
 function gameBoardFactory() {
   // create gameBoard Array
   const gameBoard = [];
+  const shipList = [];
   for (let i = 0; i < 100; i++) {
     gameBoard.push("");
   }
-
   let shipDirection = "";
   const setShipDirection = (direction) => {
     return (shipDirection = direction);
@@ -88,6 +88,7 @@ function gameBoardFactory() {
   const getShipPosition = (shipId) => {
     const shipPosition = [];
     gameBoard.forEach((item, index) => {
+      // console.log("item", item);
       if (item === shipId) {
         // return index;
         shipPosition.push(index);
@@ -149,15 +150,14 @@ function gameBoardFactory() {
     return true;
   }
   // const shipCoordinates = [];
-  const placeShip = (shipId, initialPosition) => {
-    // const ship = shipFactory(shipName);
-    const ship = shipList.filter((item) => item.id == shipId);
-    const shipLength = ship[0].length;
+  const placeShip = (ship, initialPosition) => {
+    // const ship = shipList.filter((item) => item.id == shipId);
+    const shipLength = ship.length;
     if (shipDirection === "horizontal") {
       if (isMoveValid(shipDirection, initialPosition, shipLength)) {
         let i = 0;
         while (i < shipLength) {
-          gameBoard[initialPosition + i] = ship[0].id;
+          gameBoard[initialPosition + i] = ship.id;
           i++;
         }
       } else {
@@ -167,7 +167,7 @@ function gameBoardFactory() {
       if (isMoveValid(shipDirection, initialPosition, shipLength)) {
         let i = 0;
         while (i < shipLength) {
-          gameBoard[initialPosition + 10 * i] = ship[0].id;
+          gameBoard[initialPosition + 10 * i] = ship.id;
           i++;
         }
       } else {
@@ -180,6 +180,8 @@ function gameBoardFactory() {
   };
 
   const receiveAttack = (attackCoordinate) => {
+    // console.table(gameBoard);
+    console.log(gameBoard[attackCoordinate]);
     if (gameBoard[attackCoordinate] === "") {
       gameBoard[attackCoordinate] = "Missed";
       // return gameBoard[attackCoordinate];
@@ -188,15 +190,18 @@ function gameBoardFactory() {
       const ship = shipList.find(
         (ship) => ship.id === gameBoard[attackCoordinate]
       );
+      console.log("ship", ship);
       return ship.hit(attackCoordinate);
     }
   };
   const hasEveryShipSunk = () => {
     console.log(gameBoard);
     console.log(shipList);
+    console.log(gameBoard);
     return shipList.every((ship) => ship.isSunk());
   };
   return {
+    shipList,
     setShipDirection,
     placeShip,
     getShipPosition,
