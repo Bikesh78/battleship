@@ -58,4 +58,22 @@ describe("game board", () => {
     gameBoard.placeShip("carrier", initialPosition);
     expect(gameBoard.receiveAttack(60)).toBe(60);
   });
+  test("Receive missed attack", () => {
+    const gameBoard = gameBoardFactory();
+    gameBoard.setShipDirection("vertical");
+    const initialPosition = 50;
+    gameBoard.placeShip("carrier", initialPosition);
+    expect(gameBoard.receiveAttack(51)).toBe("Missed");
+  });
+  test("Every ship has sunk", () => {
+    const gameBoard = gameBoardFactory();
+    const submarine = shipFactory("submarine");
+    gameBoard.setShipDirection("horizontal");
+    gameBoard.placeShip("submarine", 1);
+    gameBoard.receiveAttack(1);
+    gameBoard.receiveAttack(10);
+    gameBoard.receiveAttack(2);
+    gameBoard.receiveAttack(3);
+    expect(gameBoard.hasEveryShipSunk()).toBe(true);
+  });
 });

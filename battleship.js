@@ -60,6 +60,9 @@ function shipFactory(name) {
     } */
 
   const isSunk = (shipId) => {
+    // const ship = shipList.find((ship) => ship.id === shipId);
+    // const hitPositions = ship.hitPositions;
+    // const length = ship.length;
     if (hitPositions.length === length) {
       return "Sunk";
     } else {
@@ -92,38 +95,66 @@ function gameBoardFactory() {
     });
     return shipPosition;
   };
+  function isShipOutOfBound(shipDirection, initialPosition, shipLength) {
+    if (shipDirection === "horizontal") {
+      // All the rows have same tens values e.g first row: 0 to 9, second row: 10 to 19.
+      // Having different tens values means the ship is out of bound
+      const lastShipCoordinate = initialPosition + shipLength;
+      const initialTensValue = Math.floor(initialPosition / 10);
+      const lastTensValue = Math.floor(lastShipCoordinate / 10);
+      if (initialTensValue !== lastTensValue) {
+        return true;
+      } else return false;
+    } else if (shipDirection === "vertical") {
+      // The coordiantes in gameboard ranges from 0 to 99.
+      // So the ship's coordinate should not be greater than 99
+      const lastShipCoordinate = initialPosition + (shipLength - 1) * 10;
+      if (lastShipCoordinate > 99) {
+        return true;
+      } else return false;
+    }
+  }
+  function isCellOccupied(shipDirection, initialPosition, shipLength) {
+    if (shipDirection === "horizontal") {
+      let occupiedCell = 0;
+      for (let i = 0; i < shipLength; i++) {
+        if (gameBoard[initialPosition + i] !== "") {
+          occupiedCell++;
+          break;
+        }
+      }
+      if (occupiedCell) {
+        return true;
+      } else return false;
+    } else if (shipDirection === "vertical") {
+      let occupiedCell = 0;
+      for (let i = 0; i < shipLength; i++) {
+        if (gameBoard[initialPosition + 10 * i] !== "") {
+          occupiedCell++;
+          break;
+        }
+      }
+      if (occupiedCell) {
+        return true;
+      } else return false;
+    }
+  }
+  function isMoveValid(shipDirection, initialPosition, shipLength) {
+    if (isShipOutOfBound(shipDirection, initialPosition, shipLength)) {
+      return false;
+    }
+    if (isCellOccupied(shipDirection, initialPosition, shipLength)) {
+      return false;
+    }
+    return true;
+  }
   // const shipCoordinates = [];
   const placeShip = (shipId, initialPosition) => {
     // const ship = shipFactory(shipName);
     const ship = shipList.filter((item) => item.id == shipId);
     const shipLength = ship[0].length;
-    /* if (shipLength + initialPosition > 10) {
-      return "Not valid";
-    } */
-
-    function isMoveValid(shipDirection) {
-      if (shipDirection === "horizontal") {
-        // All the rows have same tens values e.g first row: 0 to 9, second row: 10 to 19.
-        // Having different tens values means the ship has exceeded its horizontal limit and move is invalied
-        const lastShipCoordinate = initialPosition + shipLength;
-        const initialTensValue = Math.floor(initialPosition / 10);
-        const lastTensValue = Math.floor(lastShipCoordinate / 10);
-        if (initialTensValue !== lastTensValue) {
-          return false;
-        }
-        return true;
-      } else if (shipDirection === "vertical") {
-        // The coordiantes in gameboard ranges from 0 to 99.
-        // So the ship's coordinate should not be greater than 99
-        const lastShipCoordinate = initialPosition + (shipLength - 1) * 10;
-        if (lastShipCoordinate > 99) {
-          return false;
-        }
-        return true;
-      }
-    }
     if (shipDirection === "horizontal") {
-      if (isMoveValid(shipDirection)) {
+      if (isMoveValid(shipDirection, initialPosition, shipLength)) {
         let i = 0;
         while (i < shipLength) {
           gameBoard[initialPosition + i] = ship[0].id;
@@ -133,14 +164,10 @@ function gameBoardFactory() {
         return "Not Valid";
       }
     } else if (shipDirection === "vertical") {
-      if (isMoveValid(shipDirection)) {
+      if (isMoveValid(shipDirection, initialPosition, shipLength)) {
         let i = 0;
         while (i < shipLength) {
-          if (i === 0) {
-            gameBoard[initialPosition + i] = ship[0].id;
-          } else {
-            gameBoard[initialPosition + 10 * i] = ship[0].id;
-          }
+          gameBoard[initialPosition + 10 * i] = ship[0].id;
           i++;
         }
       } else {
@@ -155,15 +182,27 @@ function gameBoardFactory() {
   const receiveAttack = (attackCoordinate) => {
     if (gameBoard[attackCoordinate] === "") {
       gameBoard[attackCoordinate] = "Missed";
+      // return gameBoard[attackCoordinate];
+      return "Missed";
     } else {
       const ship = shipList.find(
         (ship) => ship.id === gameBoard[attackCoordinate]
       );
-      console.log(ship);
       return ship.hit(attackCoordinate);
     }
   };
-  return { setShipDirection, placeShip, getShipPosition, receiveAttack };
+  const hasEveryShipSunk = () => {
+    console.log(gameBoard);
+    console.log(shipList);
+    return shipList.every((ship) => ship.isSunk());
+  };
+  return {
+    setShipDirection,
+    placeShip,
+    getShipPosition,
+    receiveAttack,
+    hasEveryShipSunk,
+  };
 }
 
 export { shipFactory, gameBoardFactory };
