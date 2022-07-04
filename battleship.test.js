@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { shipFactory, gameBoardFactory, playerFactory } from "./battleship";
 
-/* describe("ship object", () => {
+describe("ship object", () => {
   test("get ship length", () => {
     const ship = shipFactory("submarine");
     expect(ship.length).toBe(3);
@@ -87,7 +87,7 @@ describe("game board", () => {
     gameBoard.receiveAttack(21);
     expect(gameBoard.hasEveryShipSunk()).toBe(true);
   });
-}); */
+});
 
 describe("player function", () => {
   test("Create player", () => {
@@ -103,7 +103,7 @@ describe("player function", () => {
     oppositionGameBoard.shipList.push(submarine);
     expect(player.attack(1, oppositionGameBoard)).toBe(1);
   });
-  test("Already attacked position to throw error", () => {
+  test("Already attacked position to show error", () => {
     const player = playerFactory("player");
     const oppositionGameBoard = gameBoardFactory();
     const submarine = shipFactory("submarine");

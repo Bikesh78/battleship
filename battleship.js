@@ -23,50 +23,14 @@ function shipFactory(name) {
   const id = name;
   const hitPositions = [];
   const hit = (position) => {
-    /*  hitPositions.push([x, y]);
-    return hitPositions[hitPositions.length - 1]; */
     hitPositions.push(position);
     return hitPositions[hitPositions.length - 1];
   };
-  /*   const shipInitialCoordinates = [1, 1];
-    const shipDirection = "horizontal";
-    const shipCoordinates = [];
 
-    if (shipDirection === "horizontal") {
-      let i = 0;
-      while (i < length) {
-        shipCoordinates.push(
-          shipInitialCoordinates.map((item, index) => {
-            if (index === 1) {
-              return item + i;
-            } else return item;
-          })
-        );
-        i++;
-      }
-    } else if (shipDirection === "vertical") {
-      let i = 0;
-      while (i < length) {
-        shipCoordinates.push(
-          shipInitialCoordinates.map((item, index) => {
-            if (index === 0) {
-              return item + 1;
-            } else {
-              return item;
-            }
-          })
-        );
-      }
-    } */
-
-  const isSunk = (shipId) => {
-    // const ship = shipList.find((ship) => ship.id === shipId);
-    // const hitPositions = ship.hitPositions;
-    // const length = ship.length;
+  const isSunk = () => {
     if (hitPositions.length === length) {
       return "Sunk";
     } else {
-      //   return false;
       return false;
     }
   };
@@ -89,9 +53,7 @@ function gameBoardFactory() {
   const getShipPosition = (shipId) => {
     const shipPosition = [];
     gameBoard.forEach((item, index) => {
-      // console.log("item", item);
       if (item === shipId) {
-        // return index;
         shipPosition.push(index);
       }
     });
@@ -175,17 +137,11 @@ function gameBoardFactory() {
         return "Not Valid";
       }
     }
-    // return shipCoordinates;
-    // return getShipPosition(shipId);
     return gameBoard;
   };
   const receiveAttack = (attackCoordinate) => {
-    // console.table(gameBoard);
-    // console.log(gameBoard[attackCoordinate]);
-
     if (gameBoard[attackCoordinate] === "") {
       gameBoard[attackCoordinate] = "Missed";
-      // return gameBoard[attackCoordinate];
       return "Missed";
     } else {
       const ship = shipList.find(
@@ -217,7 +173,6 @@ function gameBoardFactory() {
 function playerFactory(name) {
   const gameBoard = gameBoardFactory();
   const attack = (position, oppositionGameBoard) => {
-    // console.log(oppositionGameBoard.gameBoard);
     if (oppositionGameBoard.hitCoordinates.includes(position)) {
       console.log("item", position);
       return "Not valid";
@@ -225,7 +180,6 @@ function playerFactory(name) {
       oppositionGameBoard.hitCoordinates.push(position);
       return oppositionGameBoard.receiveAttack(position);
     }
-    // return oppositionGameBoard.receiveAttack(position);
   };
   return { name, gameBoard, attack };
 }
