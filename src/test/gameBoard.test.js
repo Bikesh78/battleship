@@ -1,23 +1,6 @@
 /* eslint-disable no-undef */
-import { shipFactory, gameBoardFactory, playerFactory } from "./battleship";
-
-describe("ship object", () => {
-  test("get ship length", () => {
-    const ship = shipFactory("submarine");
-    expect(ship.length).toBe(3);
-  });
-  test("get hit location", () => {
-    const ship = shipFactory("submarine");
-    expect(ship.hit(15)).toStrictEqual(15);
-  });
-  test("check horizontally placed ship is sunk", () => {
-    const ship = shipFactory("destroyer");
-    ship.hit(1);
-    ship.hit(2);
-    // const shipCoordinates = [1, 2, 3];
-    expect(ship.isSunk("destroyer")).toBe("Sunk");
-  });
-});
+import gameBoardFactory from "../gameBoardFactory";
+import shipFactory from "../shipFactory";
 
 describe("game board", () => {
   test("place cruiser horizontally in gameboard", () => {
@@ -86,36 +69,5 @@ describe("game board", () => {
     gameBoard.receiveAttack(20);
     gameBoard.receiveAttack(21);
     expect(gameBoard.hasEveryShipSunk()).toBe(true);
-  });
-});
-
-describe("player function", () => {
-  test("Create player", () => {
-    const player = playerFactory("player");
-    expect(player.name).toBe("player");
-  });
-  test("Attack opposition's gameboard", () => {
-    const player = playerFactory("player");
-    const oppositionGameBoard = gameBoardFactory();
-    const submarine = shipFactory("submarine");
-    oppositionGameBoard.setShipDirection("horizontal");
-    oppositionGameBoard.placeShip(submarine, 1);
-    oppositionGameBoard.shipList.push(submarine);
-    expect(player.attack(1, oppositionGameBoard)).toBe(1);
-  });
-  test("Already attacked position to show error", () => {
-    const player = playerFactory("player");
-    const oppositionGameBoard = gameBoardFactory();
-    const submarine = shipFactory("submarine");
-    oppositionGameBoard.setShipDirection("horizontal");
-    oppositionGameBoard.placeShip(submarine, 15);
-    oppositionGameBoard.shipList.push(submarine);
-    player.attack(15, oppositionGameBoard);
-    player.attack(16, oppositionGameBoard);
-    // for (let i = 0; i < 50; i++) {
-    //   player.randomAttack(oppositionGameBoard);
-    // }
-    expect(player.attack(15, oppositionGameBoard)).toBe("Not valid");
-    // expect(oppositionGameBoard.hasEveryShipSunk()).toBe(true);
   });
 });

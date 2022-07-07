@@ -1,44 +1,4 @@
-// let shipList = [];
-function shipFactory(name) {
-  let length;
-  switch (name) {
-    case "carrier":
-      length = 5;
-      break;
-    case "battleship":
-      length = 4;
-      break;
-    case "cruiser":
-      length = 3;
-      break;
-    case "submarine":
-      length = 3;
-      break;
-    case "destroyer":
-      length = 2;
-      break;
-    default:
-      return;
-  }
-  const id = name;
-  const hitPositions = [];
-  const hit = (position) => {
-    hitPositions.push(position);
-    return hitPositions[hitPositions.length - 1];
-  };
-
-  const isSunk = () => {
-    if (hitPositions.length === length) {
-      return "Sunk";
-    } else {
-      return false;
-    }
-  };
-  // shipList.push({ id, length, hit, isSunk, hitPositions });
-  return { id, length, hit, isSunk };
-}
-
-function gameBoardFactory() {
+export default function gameBoardFactory() {
   // create gameBoard Array
   const gameBoard = [];
   const shipList = [];
@@ -147,15 +107,15 @@ function gameBoardFactory() {
       const ship = shipList.find(
         (ship) => ship.id === gameBoard[attackCoordinate]
       );
-      console.log("ship", ship);
-      // gameBoard[attackCoordinate] = "Hit";
+      //   console.log("ship", ship);
+      gameBoard[attackCoordinate] = "Hit";
       return ship.hit(attackCoordinate);
     }
   };
   const hasEveryShipSunk = () => {
-    console.log(gameBoard);
+    /*    console.log(gameBoard);
     console.log(shipList);
-    console.log(gameBoard);
+    console.log(gameBoard); */
     return shipList.every((ship) => ship.isSunk());
   };
   return {
@@ -169,34 +129,3 @@ function gameBoardFactory() {
     hasEveryShipSunk,
   };
 }
-
-function playerFactory(name) {
-  const gameBoard = gameBoardFactory();
-  const isAlreadyShot = (position, oppositionGameBoard) => {
-    if (oppositionGameBoard.hitCoordinates.includes(position)) {
-      return true;
-    } else return false;
-  };
-  const attack = (position, oppositionGameBoard) => {
-    if (isAlreadyShot(position, oppositionGameBoard)) {
-      // console.log("item", position);
-      // return
-      return "Not valid";
-    } else {
-      oppositionGameBoard.hitCoordinates.push(position);
-      return oppositionGameBoard.receiveAttack(position);
-    }
-  };
-  const randomAttack = (oppositionGameBoard) => {
-    let randomPosition = Math.floor(Math.random() * 100);
-    while (isAlreadyShot(randomPosition, oppositionGameBoard)) {
-      randomPosition = Math.floor(Math.random() * 100);
-    }
-    oppositionGameBoard.hitCoordinates.push(randomPosition);
-    console.log("ddd", oppositionGameBoard);
-    return oppositionGameBoard.receiveAttack(randomPosition);
-  };
-  return { name, gameBoard, attack, randomAttack };
-}
-
-export { shipFactory, gameBoardFactory, playerFactory };
