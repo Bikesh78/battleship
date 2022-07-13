@@ -6,9 +6,9 @@ export default function gameBoardFactory() {
   for (let i = 0; i < 100; i++) {
     gameBoard.push("");
   }
-  let shipDirection = "";
-  const setShipDirection = (direction) => {
-    return (shipDirection = direction);
+  // let shipDirection = "";
+  const setShipDirection = (ship, direction) => {
+    return (ship.shipDirection = direction);
   };
   const getShipPosition = (shipId) => {
     const shipPosition = [];
@@ -75,7 +75,11 @@ export default function gameBoardFactory() {
   // const shipCoordinates = [];
   const placeShip = (ship, initialPosition) => {
     // const ship = shipList.filter((item) => item.id == shipId);
+    if (!ship.shipDirection) {
+      setShipDirection(ship, "horizontal");
+    }
     const shipLength = ship.length;
+    const { shipDirection } = ship;
     if (shipDirection === "horizontal") {
       if (isMoveValid(shipDirection, initialPosition, shipLength)) {
         let i = 0;
@@ -113,7 +117,7 @@ export default function gameBoardFactory() {
     }
   };
   const hasEveryShipSunk = () => {
-    /*    console.log(gameBoard);
+    /* console.log(gameBoard);
     console.log(shipList);
     console.log(gameBoard); */
     return shipList.every((ship) => ship.isSunk());

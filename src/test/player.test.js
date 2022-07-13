@@ -12,7 +12,7 @@ describe("player function", () => {
     const player = playerFactory("player");
     const oppositionGameBoard = gameBoardFactory();
     const submarine = shipFactory("submarine");
-    oppositionGameBoard.setShipDirection("horizontal");
+    oppositionGameBoard.setShipDirection(submarine, "horizontal");
     oppositionGameBoard.placeShip(submarine, 1);
     oppositionGameBoard.shipList.push(submarine);
     expect(player.attack(1, oppositionGameBoard)).toBe(1);
@@ -21,7 +21,7 @@ describe("player function", () => {
     const player = playerFactory("player");
     const oppositionGameBoard = gameBoardFactory();
     const submarine = shipFactory("submarine");
-    oppositionGameBoard.setShipDirection("horizontal");
+    oppositionGameBoard.setShipDirection(submarine, "horizontal");
     oppositionGameBoard.placeShip(submarine, 15);
     oppositionGameBoard.shipList.push(submarine);
     player.attack(15, oppositionGameBoard);

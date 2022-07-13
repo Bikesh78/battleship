@@ -1,7 +1,7 @@
 import gameBoardFactory from "./gameBoardFactory";
 
 export default function playerFactory(name) {
-  const gameBoard = gameBoardFactory();
+  const playerGameBoard = gameBoardFactory();
   const isAlreadyShot = (position, oppositionGameBoard) => {
     if (oppositionGameBoard.hitCoordinates.includes(position)) {
       return true;
@@ -23,8 +23,8 @@ export default function playerFactory(name) {
       randomPosition = Math.floor(Math.random() * 100);
     }
     oppositionGameBoard.hitCoordinates.push(randomPosition);
-    console.log("ddd", oppositionGameBoard);
+    // console.log("ddd", oppositionGameBoard);
     return oppositionGameBoard.receiveAttack(randomPosition);
   };
-  return { name, gameBoard, attack, randomAttack };
+  return { name, playerGameBoard, attack, randomAttack };
 }

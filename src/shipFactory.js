@@ -21,6 +21,14 @@ export default function shipFactory(name) {
   }
   const id = name;
   const hitPositions = [];
+  let shipDirection = "";
+  /*  const setShipDirection = (direction) => {
+    if (!direction) {
+      return (shipDirection = "horizontal");
+    } else {
+      return (shipDirection = direction);
+    }
+  }; */
   const hit = (position) => {
     hitPositions.push(position);
     return hitPositions[hitPositions.length - 1];
@@ -34,5 +42,11 @@ export default function shipFactory(name) {
     }
   };
   // shipList.push({ id, length, hit, isSunk, hitPositions });
-  return { id, length, hit, isSunk };
+  return {
+    id,
+    length,
+    hit,
+    isSunk,
+    shipDirection,
+  };
 }
