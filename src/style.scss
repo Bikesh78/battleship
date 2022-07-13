@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.board-container {
+  display: flex;
+}
+.board-1 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  border-bottom: solid 1px black;
+}
+.grid {
+  width: 50px;
+  height: 50px;
+  border: solid 1px black;
+  border-right: none;
+  border-bottom: none;
+  &:nth-child(10n) {
+    border-right: solid 1px black;
+  }
+}
+.grid.occupied {
+  background-color: green;
+}
