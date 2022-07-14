@@ -36,4 +36,9 @@ playerGameBoard.placeShip(destroyer, 44);
 
 renderGameBoard(boardOne, gameBoard);
 
-console.log(playerA);
+const pcPlayer = playerFactory("PC");
+const boardTwo = document.querySelector(".board-2");
+const pcPlayerGameBoard = pcPlayer.playerGameBoard;
+const pcGameBoard = pcPlayerGameBoard.gameBoard;
+pcPlayer.randomlyPlaceShip();
+renderGameBoard(boardTwo, pcGameBoard);

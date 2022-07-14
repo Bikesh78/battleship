@@ -5,8 +5,10 @@
 }
 .board-container {
   display: flex;
+  gap: 50px;
 }
-.board-1 {
+.board-1,
+.board-2 {
   display: flex;
   flex-wrap: wrap;
   width: 500px;
@@ -25,3 +27,8 @@
 .grid.occupied {
   background-color: green;
 }
+/* .board-2 {
+  .grid.occupied {
+    background-color: transparent;
+  }
+} */

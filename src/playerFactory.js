@@ -1,4 +1,5 @@
 import gameBoardFactory from "./gameBoardFactory";
+import shipFactory from "./shipFactory";
 
 export default function playerFactory(name) {
   const playerGameBoard = gameBoardFactory();
@@ -26,5 +27,38 @@ export default function playerFactory(name) {
     // console.log("ddd", oppositionGameBoard);
     return oppositionGameBoard.receiveAttack(randomPosition);
   };
-  return { name, playerGameBoard, attack, randomAttack };
+  const randomlyPlaceShip = () => {
+    // instantiate ships
+    const submarine = shipFactory("submarine");
+    const carrier = shipFactory("carrier");
+    const battleship = shipFactory("battleship");
+    const cruiser = shipFactory("cruiser");
+    const destroyer = shipFactory("destroyer");
+
+    const shipList = [submarine, carrier, battleship, cruiser, destroyer];
+
+    // loop through each ship and place them in the board
+    shipList.forEach((ship) => {
+      let shipInitialPosition = Math.floor(Math.random() * 100);
+      const randomNumber = Math.floor(Math.random() * 2);
+      const shipDirection = randomNumber === 0 ? "horizontal" : "vertical";
+      playerGameBoard.setShipDirection(ship, shipDirection);
+      let i = 0;
+      while (i < 1) {
+        if (
+          playerGameBoard.placeShip(ship, shipInitialPosition) === "Not Valid"
+        ) {
+          shipInitialPosition = Math.floor(Math.random() * 99);
+          if (
+            playerGameBoard.placeShip(ship, shipInitialPosition) !== "Not Valid"
+          ) {
+            break;
+          }
+        } else {
+          i++;
+        }
+      }
+    });
+  };
+  return { name, playerGameBoard, attack, randomAttack, randomlyPlaceShip };
 }
