@@ -34,11 +34,18 @@ export default function playerFactory(name) {
     const battleship = shipFactory("battleship");
     const cruiser = shipFactory("cruiser");
     const destroyer = shipFactory("destroyer");
+    // let { shipList } = playerGameBoard;
 
-    const shipList = [submarine, carrier, battleship, cruiser, destroyer];
+    playerGameBoard.shipList.push(
+      submarine,
+      carrier,
+      battleship,
+      cruiser,
+      destroyer
+    );
 
     // loop through each ship and place them in the board
-    shipList.forEach((ship) => {
+    playerGameBoard.shipList.forEach((ship) => {
       let shipInitialPosition = Math.floor(Math.random() * 100);
       const randomNumber = Math.floor(Math.random() * 2);
       const shipDirection = randomNumber === 0 ? "horizontal" : "vertical";

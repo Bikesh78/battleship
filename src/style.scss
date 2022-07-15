@@ -6,6 +6,10 @@
 .board-container {
   display: flex;
   gap: 50px;
+
+  //
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .board-1,
 .board-2 {
@@ -13,6 +17,11 @@
   flex-wrap: wrap;
   width: 500px;
   border-bottom: solid 1px black;
+}
+.board-1.disabled,
+.board-2.disabled {
+  pointer-events: none;
+  filter: opacity(0.5);
 }
 .grid {
   width: 50px;
@@ -26,6 +35,12 @@
 }
 .grid.occupied {
   background-color: green;
+}
+.grid.missed {
+  background-color: brown;
+}
+.grid.hit {
+  background-color: red;
 }
 /* .board-2 {
   .grid.occupied {

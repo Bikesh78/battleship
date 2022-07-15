@@ -3,9 +3,17 @@ import shipFactory from "./shipFactory";
 import gameBoardFactory from "./gameBoardFactory";
 import "../src/style.scss";
 const renderGameBoard = (parentElement, gameBoard) => {
+  //remove already rendered elements
+  while (parentElement.firstElementChild) {
+    parentElement.firstElementChild.remove();
+  }
   gameBoard.forEach((grid, index) => {
     const gridDiv = document.createElement("div");
-    if (grid !== "") {
+    if (grid === "Missed") {
+      gridDiv.classList.add("missed");
+    } else if (grid === "Hit") {
+      gridDiv.classList.add("hit");
+    } else if (grid !== "") {
       gridDiv.classList.add("occupied");
     }
     gridDiv.classList.add("grid");
@@ -42,3 +50,9 @@ const pcPlayerGameBoard = pcPlayer.playerGameBoard;
 const pcGameBoard = pcPlayerGameBoard.gameBoard;
 pcPlayer.randomlyPlaceShip();
 renderGameBoard(boardTwo, pcGameBoard);
+console.log("pc player:", pcPlayer);
+
+boardTwo.addEventListener("click", (e) => {
+  playerA.attack(e.target.id, pcPlayerGameBoard);
+  renderGameBoard(boardTwo, pcGameBoard);
+});
