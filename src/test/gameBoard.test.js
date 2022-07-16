@@ -43,7 +43,8 @@ describe("game board", () => {
     gameBoard.setShipDirection(ship, "vertical");
     const initialPosition = 50;
     gameBoard.placeShip(ship, initialPosition);
-    expect(gameBoard.receiveAttack(60)).toBe(60);
+    gameBoard.receiveAttack(60);
+    expect(gameBoard.isShipHit()).toBe(true);
   });
   test("Receive missed attack", () => {
     const gameBoard = gameBoardFactory();
@@ -52,7 +53,8 @@ describe("game board", () => {
     gameBoard.setShipDirection(ship, "vertical");
     const initialPosition = 50;
     gameBoard.placeShip(ship, initialPosition);
-    expect(gameBoard.receiveAttack(51)).toBe("Missed");
+    gameBoard.receiveAttack(51);
+    expect(gameBoard.isShipHit()).toBe(false);
   });
   test("Every ship has sunk", () => {
     const gameBoard = gameBoardFactory();

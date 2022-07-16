@@ -103,16 +103,22 @@ export default function gameBoardFactory() {
     }
     return gameBoard;
   };
+  let shipIsHit = false;
+  const isShipHit = () => {
+    return shipIsHit;
+  };
   const receiveAttack = (attackCoordinate) => {
     if (gameBoard[attackCoordinate] === "") {
       gameBoard[attackCoordinate] = "Missed";
+      shipIsHit = false;
       return "Missed";
     } else {
       const ship = shipList.find(
         (ship) => ship.id === gameBoard[attackCoordinate]
       );
-      //   console.log("ship", ship);
+      console.log("ship", ship);
       gameBoard[attackCoordinate] = "Hit";
+      shipIsHit = true;
       return ship.hit(attackCoordinate);
     }
   };
@@ -131,5 +137,6 @@ export default function gameBoardFactory() {
     getShipPosition,
     receiveAttack,
     hasEveryShipSunk,
+    isShipHit,
   };
 }

@@ -15,6 +15,6 @@ describe("ship object", () => {
     ship.hit(1);
     ship.hit(2);
     // const shipCoordinates = [1, 2, 3];
-    expect(ship.isSunk("destroyer")).toBe("Sunk");
+    expect(ship.isSunk("destroyer")).toBe(true);
   });
 });

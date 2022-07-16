@@ -36,7 +36,7 @@ export default function shipFactory(name) {
 
   const isSunk = () => {
     if (hitPositions.length === length) {
-      return "Sunk";
+      return true;
     } else {
       return false;
     }

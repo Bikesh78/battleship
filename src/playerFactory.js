@@ -4,6 +4,7 @@ import shipFactory from "./shipFactory";
 export default function playerFactory(name) {
   const playerGameBoard = gameBoardFactory();
   const isAlreadyShot = (position, oppositionGameBoard) => {
+    console.log(oppositionGameBoard.hitCoordinates);
     if (oppositionGameBoard.hitCoordinates.includes(position)) {
       return true;
     } else return false;
