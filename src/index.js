@@ -46,21 +46,25 @@ let turnCount = 0;
 
 if (turnCount === 0) {
   boardTwo.addEventListener("click", (e) => {
+    let { isTurnOver } = playerA;
     playerA.attack(e.target.id, pcPlayerGameBoard);
     renderGameBoard(boardTwo, pcGameBoard);
-    if (!pcPlayerGameBoard.isShipHit()) {
+    boardOne.classList.add("disabled");
+    if (isTurnOver() && !pcPlayerGameBoard.isShipHit()) {
       //if player misses, it's the other player's turn
       turnCount = 1;
       console.log(turnCount);
-
+      boardOne.classList.remove("disabled");
       // delay rendering of board if pc successfully attacks a ship
       function loopRandomAttack() {
+        boardTwo.classList.add("disabled");
         setTimeout(() => {
           pcPlayer.randomAttack(playerGameBoard);
           renderGameBoard(boardOne, gameBoard);
           if (!playerGameBoard.isShipHit()) {
             console.log("inside second if statement");
             turnCount = 0;
+            boardTwo.classList.remove("disabled");
           } else {
             loopRandomAttack();
           }

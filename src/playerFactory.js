@@ -9,12 +9,18 @@ export default function playerFactory(name) {
       return true;
     } else return false;
   };
+  let isValid = true;
+  const isTurnOver = () => {
+    return isValid;
+  };
   const attack = (position, oppositionGameBoard) => {
     if (isAlreadyShot(position, oppositionGameBoard)) {
       // console.log("item", position);
       // return
+      isValid = false;
       return "Not valid";
     } else {
+      isValid = true;
       oppositionGameBoard.hitCoordinates.push(position);
       return oppositionGameBoard.receiveAttack(position);
     }
@@ -68,5 +74,12 @@ export default function playerFactory(name) {
       }
     });
   };
-  return { name, playerGameBoard, attack, randomAttack, randomlyPlaceShip };
+  return {
+    name,
+    playerGameBoard,
+    attack,
+    randomAttack,
+    randomlyPlaceShip,
+    isTurnOver,
+  };
 }
