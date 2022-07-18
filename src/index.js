@@ -41,35 +41,48 @@ const pcGameBoard = pcPlayerGameBoard.gameBoard;
 pcPlayer.randomlyPlaceShip();
 renderGameBoard(boardTwo, pcGameBoard);
 
+const winnerMessage = document.querySelector(".winner-message");
+function isGameOver(oppositionGameBoard) {
+  // if playerGameBoard.everyShipHasSunk()
+  if (oppositionGameBoard.hasEveryShipSunk()) {
+    winnerMessage.style.display = "block";
+  }
+}
+
 // player turn controller
 let turnCount = 0;
+
+// delay rendering of board if pc successfully attacks a ship
+function loopRandomAttack() {
+  boardTwo.classList.add("disabled");
+  setTimeout(() => {
+    pcPlayer.randomAttack(playerGameBoard);
+    renderGameBoard(boardOne, gameBoard);
+    isGameOver(playerGameBoard);
+    if (!playerGameBoard.isShipHit()) {
+      console.log("inside second if statement");
+      turnCount = 0;
+      boardTwo.classList.remove("disabled");
+    } else {
+      loopRandomAttack();
+    }
+  }, 800);
+}
 
 if (turnCount === 0) {
   boardTwo.addEventListener("click", (e) => {
     let { isTurnOver } = playerA;
     playerA.attack(e.target.id, pcPlayerGameBoard);
     renderGameBoard(boardTwo, pcGameBoard);
+    isGameOver(pcPlayerGameBoard);
+    console.log(pcPlayerGameBoard.hasEveryShipSunk());
     boardOne.classList.add("disabled");
     if (isTurnOver() && !pcPlayerGameBoard.isShipHit()) {
       //if player misses, it's the other player's turn
       turnCount = 1;
       console.log(turnCount);
       boardOne.classList.remove("disabled");
-      // delay rendering of board if pc successfully attacks a ship
-      function loopRandomAttack() {
-        boardTwo.classList.add("disabled");
-        setTimeout(() => {
-          pcPlayer.randomAttack(playerGameBoard);
-          renderGameBoard(boardOne, gameBoard);
-          if (!playerGameBoard.isShipHit()) {
-            console.log("inside second if statement");
-            turnCount = 0;
-            boardTwo.classList.remove("disabled");
-          } else {
-            loopRandomAttack();
-          }
-        }, 800);
-      }
+
       loopRandomAttack();
       /* while (turnCount === 1) {
         pcPlayer.randomAttack(playerGameBoard);
