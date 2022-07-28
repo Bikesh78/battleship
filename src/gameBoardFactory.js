@@ -8,6 +8,7 @@ export default function gameBoardFactory() {
   }
   // let shipDirection = "";
   const setShipDirection = (ship, direction) => {
+    console.log(ship);
     return (ship.shipDirection = direction);
   };
   const getShipPosition = (shipId) => {
@@ -72,32 +73,41 @@ export default function gameBoardFactory() {
     }
     return true;
   }
+  let isValid = true;
+  const isValidPosition = () => {
+    return isValid;
+  };
   // const shipCoordinates = [];
   const placeShip = (ship, initialPosition) => {
     // const ship = shipList.filter((item) => item.id == shipId);
+    console.log("place ship", ship);
     if (!ship.shipDirection) {
       setShipDirection(ship, "horizontal");
     }
     const shipLength = ship.length;
-    const { shipDirection } = ship;
+    let { shipDirection } = ship;
     if (shipDirection === "horizontal") {
       if (isMoveValid(shipDirection, initialPosition, shipLength)) {
+        isValid = true;
         let i = 0;
         while (i < shipLength) {
           gameBoard[initialPosition + i] = ship.id;
           i++;
         }
       } else {
+        isValid = false;
         return "Not Valid";
       }
     } else if (shipDirection === "vertical") {
       if (isMoveValid(shipDirection, initialPosition, shipLength)) {
+        isValid = true;
         let i = 0;
         while (i < shipLength) {
           gameBoard[initialPosition + 10 * i] = ship.id;
           i++;
         }
       } else {
+        isValid = false;
         return "Not Valid";
       }
     }
@@ -138,5 +148,6 @@ export default function gameBoardFactory() {
     receiveAttack,
     hasEveryShipSunk,
     isShipHit,
+    isValidPosition,
   };
 }

@@ -17,6 +17,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 }
+.board,
 .board-1,
 .board-2 {
   display: flex;
@@ -27,7 +28,7 @@ body {
 .board-1.disabled,
 .board-2.disabled {
   pointer-events: none;
-  filter: opacity(0.5);
+  // filter: opacity(0.5);
 }
 .grid {
   width: 50px;
@@ -60,4 +61,52 @@ body {
   transform: translate(-50%, -50%);
   background-color: blue;
   display: none;
+}
+.initial-message {
+  display: none;
+  width: 80%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: blue;
+  .board,
+  .ship-container {
+    flex-shrink: 0;
+  }
+}
+.ship-container {
+  .ships {
+    display: flex;
+    flex-wrap: wrap;
+    width: 160px;
+    row-gap: 10px;
+    .ship {
+      display: flex;
+      div {
+        width: 50px;
+        height: 50px;
+        border: solid 1px black;
+        background-color: green;
+      }
+    }
+    .ship.vertical {
+      flex-direction: column;
+      flex-basis: 48%;
+    }
+  }
+}
+body.modal-opened {
+  overflow: hidden;
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  .initial-message {
+    display: flex;
+  }
 }

@@ -9,18 +9,18 @@ export default function playerFactory(name) {
       return true;
     } else return false;
   };
-  let isValid = true;
+  let isAttackValid = true;
   const isTurnOver = () => {
-    return isValid;
+    return isAttackValid;
   };
   const attack = (position, oppositionGameBoard) => {
     if (isAlreadyShot(position, oppositionGameBoard)) {
       // console.log("item", position);
       // return
-      isValid = false;
+      isAttackValid = false;
       return "Not valid";
     } else {
-      isValid = true;
+      isAttackValid = true;
       oppositionGameBoard.hitCoordinates.push(position);
       return oppositionGameBoard.receiveAttack(position);
     }

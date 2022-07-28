@@ -14,9 +14,9 @@ const renderGameBoard = (parentElement, gameBoard, hideGrid) => {
     }
     gridDiv.classList.add("grid");
     gridDiv.setAttribute("id", index);
+
     parentElement.appendChild(gridDiv);
   });
-  console.log(gameBoard);
 };
 
 export default renderGameBoard;
