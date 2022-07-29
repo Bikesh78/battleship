@@ -97,6 +97,8 @@ if (!hasGameStarted) {
   const initialMessage = document.querySelector(".initial-message");
   const board = initialMessage.querySelector(".board");
   const ships = initialMessage.querySelectorAll(".ship");
+  const draggableShipList = document.querySelectorAll(".ship");
+  let draggedShip = null;
   body.classList.add("place-ship");
 
   renderGameBoard(board, gameBoard);
@@ -112,20 +114,31 @@ if (!hasGameStarted) {
         playerGameBoard.setShipDirection(rotatedShip[0], "horizontal");
       } else {
         playerGameBoard.setShipDirection(rotatedShip[0], "vertical");
-        console.log(rotatedShip);
+        // console.log(rotatedShip);
       }
+    });
+  });
+
+  draggableShipList.forEach((ship) => {
+    // console.log(ship.firstElementChild);
+    ship.addEventListener("mousedown", (e) => {
+      draggedShip = playerGameBoard.shipList.filter(
+        (ship) => ship.id === e.target.className
+      );
     });
   });
 
   document.addEventListener("dragenter", (e) => {
     e.preventDefault();
-    if (dragCount === 0) {
-      draggedShip = playerGameBoard.shipList.filter(
-        (ship) => ship.id === e.fromElement.className
-      );
-      console.log("enter", e.fromElement.className);
-      dragCount++;
-    }
+    // if (dragCount === 0) {
+    //   console.log("enter", e);
+    //   if (e.fromElement !== null) {
+    //     draggedShip = playerGameBoard.shipList.filter(
+    //       (ship) => ship.id === e.fromElement.className
+    //     );
+    //     dragCount++;
+    //   }
+    // }
   });
   document.addEventListener("dragover", (e) => {
     e.preventDefault();
@@ -142,6 +155,7 @@ if (!hasGameStarted) {
       );
       playerGameBoard.placeShip(draggedShip[0], Number(e.target.id));
       // console.log(draggedShip);
+      draggedShip = null;
       shipToBeRemoved.parentElement.remove();
       renderGameBoard(board, gameBoard);
       if (!ships.firstElementChild) {
