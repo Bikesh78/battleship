@@ -14,7 +14,7 @@ body {
   font-family: "Nunito", sans-serif;
   font-size: 16px;
   font-weight: 400;
-  min-width: 100vh;
+  min-height: 100vh;
   background-color: $background-color;
   color: $text-color;
 }
@@ -32,6 +32,7 @@ h4 {
   font-size: 20px;
 }
 .board-container {
+  padding: 25px 0;
   display: flex;
   gap: 50px;
   flex-wrap: wrap;
