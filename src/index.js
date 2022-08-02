@@ -23,6 +23,7 @@ const pcGameBoard = pcPlayerGameBoard.gameBoard;
 
 const winnerMessage = document.querySelector(".winner-message");
 const winnerMessageText = winnerMessage.querySelector(".winner-message-text");
+const playAgainBtn = winnerMessage.querySelector(".btn-main");
 let dragCount = 0;
 let draggedShip = null;
 
@@ -36,8 +37,8 @@ playerGameBoard.shipList.push(
 
 function isGameOver(oppositionGameBoard, player) {
   if (oppositionGameBoard.hasEveryShipSunk()) {
-    // console.log(player);
-    winnerMessage.style.visibility = "visible";
+    winnerMessage.style.cssText = "opacity:1;visibility:visible";
+    playAgainBtn.addEventListener("click", () => window.location.reload());
     if (player.name === "player A")
       winnerMessageText.textContent = `You Won The Game.`;
   } else if (player.name === "PC Player") {
@@ -59,7 +60,6 @@ function startGame() {
       renderGameBoard(boardOne, gameBoard);
       isGameOver(playerGameBoard, pcPlayer);
       if (!playerGameBoard.isShipHit()) {
-        console.log("inside second if statement");
         turnCount = 0;
         boardTwo.classList.remove("disabled");
         boardOne.classList.add("disabled");
@@ -130,19 +130,9 @@ if (!hasGameStarted) {
 
   document.addEventListener("dragenter", (e) => {
     e.preventDefault();
-    // if (dragCount === 0) {
-    //   console.log("enter", e);
-    //   if (e.fromElement !== null) {
-    //     draggedShip = playerGameBoard.shipList.filter(
-    //       (ship) => ship.id === e.fromElement.className
-    //     );
-    //     dragCount++;
-    //   }
-    // }
   });
   document.addEventListener("dragover", (e) => {
     e.preventDefault();
-    // console.log("drag end", e);
   });
   document.addEventListener("drop", (e) => {
     e.preventDefault();
@@ -155,8 +145,10 @@ if (!hasGameStarted) {
       );
       playerGameBoard.placeShip(draggedShip[0], Number(e.target.id));
       // console.log(draggedShip);
+      if (playerGameBoard.isValidPosition()) {
+        shipToBeRemoved.parentElement.remove();
+      }
       draggedShip = null;
-      shipToBeRemoved.parentElement.remove();
       renderGameBoard(board, gameBoard);
       if (!ships.firstElementChild) {
         body.classList.remove("place-ship");

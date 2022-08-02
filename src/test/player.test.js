@@ -26,10 +26,6 @@ describe("player function", () => {
     oppositionGameBoard.shipList.push(submarine);
     player.attack(15, oppositionGameBoard);
     player.attack(16, oppositionGameBoard);
-    // for (let i = 0; i < 50; i++) {
-    //   player.randomAttack(oppositionGameBoard);
-    // }
     expect(player.attack(15, oppositionGameBoard)).toBe("Not valid");
-    // expect(oppositionGameBoard.hasEveryShipSunk()).toBe(true);
   });
 });
