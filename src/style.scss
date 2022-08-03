@@ -4,6 +4,7 @@ $text-color: #bdb6b6;
 $ship-color: #c4980b7d;
 $missed-color: #a93f3f;
 $hit-color: #298538;
+$btn-sec-color: #412fc3;
 
 * {
   margin: 0;
@@ -60,7 +61,6 @@ h5 {
 .board-1.disabled,
 .board-2.disabled {
   pointer-events: none;
-  // filter: opacity(0.5);
 }
 .grid {
   width: 35px;
@@ -126,18 +126,26 @@ h5 {
 .turn-info {
   text-align: center;
 }
-.btn-main {
+.btn {
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 18px;
   outline: none;
   border: none;
+  cursor: pointer;
+}
+.btn-main {
   background-color: $background-color;
   color: white;
-  cursor: pointer;
-  transition: background 0.5s ease-in-out;
   &:hover {
     background-color: darken($color: $background-color, $amount: 10);
+  }
+}
+.btn-secondary {
+  background-color: $btn-sec-color;
+  color: white;
+  &:hover {
+    background-color: darken($color: $btn-sec-color, $amount: 10);
   }
 }
 
@@ -157,18 +165,32 @@ h5 {
     padding: 25px;
     border-radius: 15px;
     width: 50%;
+    max-height: 95vh;
+    overflow-y: auto;
     z-index: 2;
     background-color: darken($color: $background-color, $amount: 10);
     top: -150%;
     left: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.5s ease-in-out;
+    @media (max-width: 576px) {
+      width: 80%;
+    }
     h4 {
       text-align: center;
+      margin-bottom: 10px;
+      @media (max-width: 576px) {
+        font-size: 25px;
+      }
     }
     .close-icon {
       text-align: right;
       cursor: pointer;
+    }
+    .text-container {
+      p {
+        margin-bottom: 10px;
+      }
     }
   }
   .overlay {
@@ -205,6 +227,15 @@ h5 {
   @media (max-width: 767px) {
     order: 1;
   }
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+    p {
+      font-size: 18px;
+    }
+  }
   .ships {
     margin-top: 15px;
     display: flex;
@@ -234,7 +265,6 @@ h5 {
   }
 }
 body.place-ship {
-  // overflow: hidden;
   .board-container {
     display: none;
   }

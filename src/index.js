@@ -99,6 +99,7 @@ if (!hasGameStarted) {
   const initialMessage = document.querySelector(".initial-message");
   const board = initialMessage.querySelector(".board");
   const ships = initialMessage.querySelectorAll(".ship");
+  const randomButton = initialMessage.querySelector(".btn-secondary");
   const instructionBtn = document.querySelector(".instruction-button");
   const overlay = initialMessage.querySelector(".overlay");
   const closeIcon = initialMessage.querySelector(".close-icon");
@@ -108,6 +109,13 @@ if (!hasGameStarted) {
 
   renderGameBoard(board, gameBoard);
 
+  randomButton.addEventListener("click", () => {
+    playerGameBoard.shipList = [];
+    playerA.randomlyPlaceShip();
+    body.classList.remove("place-ship");
+    hasGameStarted = true;
+    startGame();
+  });
   ships.forEach((ship) => {
     ship.addEventListener("click", (e) => {
       e.stopPropagation();
