@@ -4,7 +4,6 @@ import shipFactory from "./shipFactory";
 export default function playerFactory(name) {
   const playerGameBoard = gameBoardFactory();
   const isAlreadyShot = (position, oppositionGameBoard) => {
-    // console.log(oppositionGameBoard.hitCoordinates);
     if (oppositionGameBoard.hitCoordinates.includes(position)) {
       return true;
     } else return false;
@@ -15,8 +14,6 @@ export default function playerFactory(name) {
   };
   const attack = (position, oppositionGameBoard) => {
     if (isAlreadyShot(position, oppositionGameBoard)) {
-      // console.log("item", position);
-      // return
       isAttackValid = false;
       return "Not valid";
     } else {
@@ -31,7 +28,6 @@ export default function playerFactory(name) {
       randomPosition = Math.floor(Math.random() * 100);
     }
     oppositionGameBoard.hitCoordinates.push(randomPosition);
-    // console.log("ddd", oppositionGameBoard);
     return oppositionGameBoard.receiveAttack(randomPosition);
   };
   const randomlyPlaceShip = () => {
@@ -41,7 +37,6 @@ export default function playerFactory(name) {
     const battleship = shipFactory("battleship");
     const cruiser = shipFactory("cruiser");
     const destroyer = shipFactory("destroyer");
-    // let { shipList } = playerGameBoard;
 
     playerGameBoard.shipList.push(
       submarine,

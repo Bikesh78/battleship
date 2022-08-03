@@ -24,6 +24,7 @@ const pcGameBoard = pcPlayerGameBoard.gameBoard;
 const winnerMessage = document.querySelector(".winner-message");
 const winnerMessageText = winnerMessage.querySelector(".winner-message-text");
 const playAgainBtn = winnerMessage.querySelector(".btn-main");
+const turnInfo = document.querySelector(".turn-info");
 let dragCount = 0;
 let draggedShip = null;
 
@@ -34,7 +35,6 @@ playerGameBoard.shipList.push(
   cruiser,
   destroyer
 );
-
 function isGameOver(oppositionGameBoard, player) {
   if (oppositionGameBoard.hasEveryShipSunk()) {
     winnerMessage.style.cssText = "opacity:1;visibility:visible";
@@ -47,6 +47,7 @@ function isGameOver(oppositionGameBoard, player) {
 }
 function startGame() {
   renderGameBoard(boardOne, gameBoard);
+  turnInfo.textContent = "Your Turn";
 
   // player turn controller
   let turnCount = 0;
@@ -55,12 +56,14 @@ function startGame() {
   function loopRandomAttack() {
     boardOne.classList.remove("disabled");
     boardTwo.classList.add("disabled");
+    turnInfo.textContent = "Computer's Turn";
     setTimeout(() => {
       pcPlayer.randomAttack(playerGameBoard);
       renderGameBoard(boardOne, gameBoard);
       isGameOver(playerGameBoard, pcPlayer);
       if (!playerGameBoard.isShipHit()) {
         turnCount = 0;
+        turnInfo.textContent = "Your Turn";
         boardTwo.classList.remove("disabled");
         boardOne.classList.add("disabled");
       } else {
@@ -89,7 +92,6 @@ function startGame() {
 }
 
 renderGameBoard(boardOne, gameBoard);
-
 pcPlayer.randomlyPlaceShip();
 renderGameBoard(boardTwo, pcGameBoard, true);
 
@@ -97,6 +99,9 @@ if (!hasGameStarted) {
   const initialMessage = document.querySelector(".initial-message");
   const board = initialMessage.querySelector(".board");
   const ships = initialMessage.querySelectorAll(".ship");
+  const instructionBtn = document.querySelector(".instruction-button");
+  const overlay = initialMessage.querySelector(".overlay");
+  const closeIcon = initialMessage.querySelector(".close-icon");
   const draggableShipList = document.querySelectorAll(".ship");
   let draggedShip = null;
   body.classList.add("place-ship");
@@ -114,13 +119,11 @@ if (!hasGameStarted) {
         playerGameBoard.setShipDirection(rotatedShip[0], "horizontal");
       } else {
         playerGameBoard.setShipDirection(rotatedShip[0], "vertical");
-        // console.log(rotatedShip);
       }
     });
   });
 
   draggableShipList.forEach((ship) => {
-    // console.log(ship.firstElementChild);
     ship.addEventListener("mousedown", (e) => {
       draggedShip = playerGameBoard.shipList.filter(
         (ship) => ship.id === e.target.className
@@ -136,7 +139,6 @@ if (!hasGameStarted) {
   });
   document.addEventListener("drop", (e) => {
     e.preventDefault();
-    // console.log("drop", e);
     dragCount = 0;
     if (e.target.className.includes("grid")) {
       let ships = initialMessage.querySelector(".ships");
@@ -144,7 +146,6 @@ if (!hasGameStarted) {
         `.${draggedShip[0].id}`
       );
       playerGameBoard.placeShip(draggedShip[0], Number(e.target.id));
-      // console.log(draggedShip);
       if (playerGameBoard.isValidPosition()) {
         shipToBeRemoved.parentElement.remove();
       }
@@ -156,5 +157,14 @@ if (!hasGameStarted) {
         startGame();
       }
     }
+  });
+  instructionBtn.addEventListener("click", () =>
+    initialMessage.classList.add("show-instructions")
+  );
+  overlay.addEventListener("click", () =>
+    initialMessage.classList.remove("show-instructions")
+  );
+  closeIcon.addEventListener("click", () => {
+    initialMessage.classList.remove("show-instructions");
   });
 }

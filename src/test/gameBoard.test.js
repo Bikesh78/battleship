@@ -62,7 +62,6 @@ describe("game board", () => {
     gameBoard.setShipDirection(submarine, "horizontal");
     gameBoard.placeShip(submarine, 1);
     const destroyer = shipFactory("destroyer");
-    // gameBoard.placeShip(destroyer, "horizontal");
     gameBoard.placeShip(destroyer, 20);
     gameBoard.shipList.push(submarine);
     gameBoard.shipList.push(destroyer);

@@ -29,6 +29,9 @@ h3 {
   font-size: 50px;
 }
 h4 {
+  font-size: 30px;
+}
+h5 {
   font-size: 20px;
 }
 .board-container {
@@ -119,17 +122,9 @@ h4 {
   align-items: center;
   gap: 15px;
   transition: opacity 0.5s ease-in-out;
-  animation: pop-up 0.5s ease;
 }
-@keyframes pop-up {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  1% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.turn-info {
+  text-align: center;
 }
 .btn-main {
   padding: 10px 20px;
@@ -154,6 +149,39 @@ h4 {
   @media (max-width: 767px) {
     flex-wrap: wrap;
   }
+  li {
+    list-style: none;
+  }
+  .game-instructions {
+    position: absolute;
+    padding: 25px;
+    border-radius: 15px;
+    width: 50%;
+    z-index: 2;
+    background-color: darken($color: $background-color, $amount: 10);
+    top: -150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease-in-out;
+    h4 {
+      text-align: center;
+    }
+    .close-icon {
+      text-align: right;
+      cursor: pointer;
+    }
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+  }
   .board,
   .ship-container {
     flex-shrink: 0;
@@ -162,6 +190,15 @@ h4 {
     @media (max-width: 767px) {
       order: 2;
     }
+  }
+}
+.initial-message.show-instructions {
+  .overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+  .game-instructions {
+    top: 50%;
   }
 }
 .ship-container {
