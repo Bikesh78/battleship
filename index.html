@@ -30,14 +30,17 @@
         </div>
         <div class="winner-message">
             <h3 class="winner-message-text"></h3>
-            <button class="btn-main">Play Again</button>
+            <button class="btn btn-main">Play Again</button>
         </div>
         <div class="initial-message">
             <div class="board"></div>
             <div class="ship-container">
-                <h2>Place Your Ship</h2>
-                <p>Drag To Place Your Ship. Click To Rotate It.</p>
-                <li><a href="javascript:void(0)" class="instruction-button">Clike Here For Instructions</a></li>
+                <div class="text-container">
+                    <h2>Place Your Ship</h2>
+                    <p>Drag To Place Your Ship. Click To Rotate It.</p>
+                    <button class="btn btn-secondary">Place Randomly</button>
+                    <li><a href="javascript:void(0)" class="instruction-button">Clike Here For Instructions</a></li>
+                </div>
                 <div class="ships">
                     <div class="carrier-draggable ship" draggable="true">
                         <div class="carrier"></div>
@@ -81,37 +84,45 @@
                             d="M685.8 352c0-4.4-3.6-8-8-8l-66 .3l-99.4 118.5l-99.3-118.4l-66.1-.3c-4.4 0-8 3.5-8 8c0 1.9.7 3.7 1.9 5.2l130.1 155l-130.1 154.9a8.32 8.32 0 0 0-1.9 5.2c0 4.4 3.6 8 8 8l66.1-.3l99.3-118.5L611.7 680l66 .3c4.4 0 8-3.5 8-8c0-1.9-.7-3.7-1.9-5.2L553.9 512.2l130.1-155c1.2-1.4 1.8-3.3 1.8-5.2z" />
                     </svg>
                 </div>
-                <div class="text">
+                <div class="text-container">
                     <h4>General Instruction</h4>
                     <p>
-                </div>The main objective of the game is to sink all of the other player’s ships. <br><br>
+                        The main objective of the game is to sink all of the other player’s ships.</p>
 
-                Before starting the game, first the user needs to place all of his/her ships on the board. The user
-                can do this by
-                dragging the ship with the user’s mouse and dropping it in any board coordinates. While placing the
-                ship the coordinates
-                of two ship cannot overlap with each other. <br><br>
+                    <p>Before starting the game, first the user needs to place all of his/her ships on the board. The
+                        user
+                        can do this by
+                        dragging the ship and dropping it in any square coordinates in the board. The ship should be
+                        placed such
+                        that the coordinates
+                        of two ships cannot overlap with each other and the whole body of the ship must remain within
+                        the
+                        boundary of the board.</p>
 
-                The user can change the direction of the ship to be vertical or horizontal by clicking on the ship
-                itself. The direction
-                of the ship cannot be changed once it’s placed on the board. <br><br>
+                    <p>The user can change the direction of the ship to be vertical or horizontal by clicking on the
+                        ship
+                        itself. The direction
+                        of the ship cannot be changed once it has been placed on the board.</p>
 
-                The game begins after the user is done placing all of his/her ships on the board. The computer’s
-                ships
-                are not rendered on the
-                screen. The user must attack the computer’s ship by clicking on one of the square of the computer's
-                board. If
-                the clicked square
-                contains a ship, then it’s counted as a hit. If a ship is not present at the square, then it’s a
-                miss. <br><br>
+                    <p>The game begins after the user is done placing all of his/her ships on the board. The computer’s
+                        ships
+                        are not rendered on the
+                        screen. The user must attack the computer’s ship by clicking on one of the square of the
+                        computer's
+                        board. If
+                        the square that was clicked
+                        contains a ship, then it’s counted as a hit. If a ship is not present at the square, then it’s a
+                        miss. </p>
 
-                The user and the computer will alternate turns. A player can only attack the opponent’s ship once on
-                each turn unless
-                the player successfully attacks the opponent’s ship in which case the attacking player will get
-                another chance to attack
-                the opponent’s ship. <br><br>
+                    <p>The user and the computer will alternate turns. A player can only attack the opponent’s ship
+                        once on
+                        each turn unless
+                        the player successfully attacks the opponent’s ship in which case the attacking player will get
+                        another chance to attack
+                        the opponent’s ship. </p>
 
-                The player who first manages to sink all of the opponent's ships is the winner.</p>
+                    <p>The player who first manages to sink all of the opponent's ships is the winner.</p>
+                </div>
             </div>
         </div>
     </main>
