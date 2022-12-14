@@ -1,9 +1,36 @@
 import gameBoardFactory from "./gameBoardFactory";
 import shipFactory from "./shipFactory";
 
-export default function playerFactory(name) {
+type shipDirection = "horizontal" | "vertical";
+export interface ships {
+  id: string;
+  length: number;
+  hit: (position: number) => number;
+  isSunk: () => boolean;
+  shipDirection: shipDirection;
+}
+export interface gameBoard {
+  gameBoard: Array<number> | Array<string>;
+  shipList: Array<ships>;
+  hitCoordinates: Array<number>;
+  setShipDirection: (
+    ship: ships,
+    direction: shipDirection
+  ) => shipDirection;
+  placeShip: (
+    ship: ships,
+    initialPosition: number
+  ) => number[] | string[] | "Not Valid";
+  getShipPosition: (id: number) => number[];
+  receiveAttack: (coordinate: number) => "Missed" | number;
+  hasEveryShipSunk: () => boolean;
+  isShipHit: () => boolean;
+  isValidPosition: () => boolean;
+}
+
+export default function playerFactory(name: string) {
   const playerGameBoard = gameBoardFactory();
-  const isAlreadyShot = (position, oppositionGameBoard) => {
+  const isAlreadyShot = (position: number, oppositionGameBoard: gameBoard) => {
     if (oppositionGameBoard.hitCoordinates.includes(position)) {
       return true;
     } else return false;
@@ -12,7 +39,7 @@ export default function playerFactory(name) {
   const isTurnOver = () => {
     return isAttackValid;
   };
-  const attack = (position, oppositionGameBoard) => {
+  const attack = (position: number, oppositionGameBoard: gameBoard) => {
     if (isAlreadyShot(position, oppositionGameBoard)) {
       isAttackValid = false;
       return "Not valid";
@@ -22,7 +49,7 @@ export default function playerFactory(name) {
       return oppositionGameBoard.receiveAttack(position);
     }
   };
-  const randomAttack = (oppositionGameBoard) => {
+  const randomAttack = (oppositionGameBoard: gameBoard) => {
     let randomPosition = Math.floor(Math.random() * 100);
     while (isAlreadyShot(randomPosition, oppositionGameBoard)) {
       randomPosition = Math.floor(Math.random() * 100);
@@ -32,18 +59,18 @@ export default function playerFactory(name) {
   };
   const randomlyPlaceShip = () => {
     // instantiate ships
-    const submarine = shipFactory("submarine");
-    const carrier = shipFactory("carrier");
-    const battleship = shipFactory("battleship");
-    const cruiser = shipFactory("cruiser");
-    const destroyer = shipFactory("destroyer");
+    const submarine: ships = shipFactory("submarine");
+    const carrier: ships = shipFactory("carrier");
+    const battleship: ships = shipFactory("battleship");
+    const cruiser: ships = shipFactory("cruiser");
+    const destroyer: ships = shipFactory("destroyer");
 
     playerGameBoard.shipList.push(
-      submarine,
-      carrier,
-      battleship,
-      cruiser,
-      destroyer
+      submarine as never,
+      carrier as never,
+      battleship as never,
+      cruiser as never,
+      destroyer as never
     );
 
     // loop through each ship and place them in the board

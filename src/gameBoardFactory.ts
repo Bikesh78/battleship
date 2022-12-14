@@ -1,16 +1,27 @@
-export default function gameBoardFactory() {
+import { gameBoard } from "./playerFactory";
+
+export default function gameBoardFactory(): gameBoard {
   // create gameBoard Array
-  const gameBoard = [];
-  const shipList = [];
-  const hitCoordinates = [];
+  const gameBoard: Array<number> | Array<string> = [];
+  const shipList: Array<shipFactory> = [];
+  const hitCoordinates: Array<number> = [];
   for (let i = 0; i < 100; i++) {
-    gameBoard.push("");
+    gameBoard.push("" as never);
   }
-  const setShipDirection = (ship, direction) => {
+  type shipDirection = "horizontal" | "vertical";
+  interface shipFactory {
+    id: string;
+    length: number;
+    hit: (position: number) => number;
+    isSunk: () => boolean;
+    shipDirection: shipDirection;
+  }
+  const setShipDirection = (ship: shipFactory, direction: shipDirection) => {
     return (ship.shipDirection = direction);
   };
-  const getShipPosition = (shipId) => {
-    const shipPosition = [];
+
+  const getShipPosition = (shipId: number) => {
+    const shipPosition: Array<number> = [];
     gameBoard.forEach((item, index) => {
       if (item === shipId) {
         shipPosition.push(index);
@@ -18,7 +29,11 @@ export default function gameBoardFactory() {
     });
     return shipPosition;
   };
-  function isShipOutOfBound(shipDirection, initialPosition, shipLength) {
+  function isShipOutOfBound(
+    shipDirection: shipDirection,
+    initialPosition: number,
+    shipLength: number
+  ) {
     if (shipDirection === "horizontal") {
       // All the rows have same tens values e.g first row: 0 to 9, second row: 10 to 19.
       // Having different tens values means the ship is out of bound
@@ -37,7 +52,11 @@ export default function gameBoardFactory() {
       } else return false;
     }
   }
-  function isCellOccupied(shipDirection, initialPosition, shipLength) {
+  function isCellOccupied(
+    shipDirection: shipDirection,
+    initialPosition: number,
+    shipLength: number
+  ) {
     if (shipDirection === "horizontal") {
       let occupiedCell = 0;
       for (let i = 0; i < shipLength; i++) {
@@ -62,7 +81,11 @@ export default function gameBoardFactory() {
       } else return false;
     }
   }
-  function isMoveValid(shipDirection, initialPosition, shipLength) {
+  function isMoveValid(
+    shipDirection: shipDirection,
+    initialPosition: number,
+    shipLength: number
+  ) {
     if (isShipOutOfBound(shipDirection, initialPosition, shipLength)) {
       return false;
     }
@@ -72,10 +95,10 @@ export default function gameBoardFactory() {
     return true;
   }
   let isValid = true;
-  const isValidPosition = () => {
+  const isValidPosition = (): boolean => {
     return isValid;
   };
-  const placeShip = (ship, initialPosition) => {
+  const placeShip = (ship: shipFactory, initialPosition: number) => {
     if (!ship.shipDirection) {
       setShipDirection(ship, "horizontal");
     }
@@ -109,10 +132,11 @@ export default function gameBoardFactory() {
     return gameBoard;
   };
   let shipIsHit = false;
-  const isShipHit = () => {
+  const isShipHit = (): boolean => {
     return shipIsHit;
   };
-  const receiveAttack = (attackCoordinate) => {
+
+  const receiveAttack = (attackCoordinate: number): "Missed" | number => {
     if (gameBoard[attackCoordinate] === "") {
       gameBoard[attackCoordinate] = "Missed";
       shipIsHit = false;
@@ -123,10 +147,13 @@ export default function gameBoardFactory() {
       );
       gameBoard[attackCoordinate] = "Hit";
       shipIsHit = true;
-      return ship.hit(attackCoordinate);
+      if (ship) {
+        return ship.hit(attackCoordinate);
+      }
     }
+    return "Missed";
   };
-  const hasEveryShipSunk = () => {
+  const hasEveryShipSunk = (): boolean => {
     return shipList.every((ship) => ship.isSunk());
   };
   return {
