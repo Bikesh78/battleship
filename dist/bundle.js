@@ -736,6 +736,7 @@ const winnerMessage = document.querySelector(".winner-message");
 const winnerMessageText = winnerMessage === null || winnerMessage === void 0 ? void 0 : winnerMessage.querySelector(".winner-message-text");
 const playAgainBtn = winnerMessage.querySelector(".btn-main");
 const turnInfo = document.querySelector(".turn-info");
+let dragCount = 0;
 playerGameBoard.shipList.push(submarine, carrier, battleship, cruiser, destroyer);
 function isGameOver(oppositionGameBoard, player) {
     if (oppositionGameBoard.hasEveryShipSunk()) {

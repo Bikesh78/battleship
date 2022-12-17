@@ -38,6 +38,7 @@ const winnerMessageText = winnerMessage?.querySelector(
 ) as HTMLElement;
 const playAgainBtn = winnerMessage.querySelector(".btn-main");
 const turnInfo = document.querySelector(".turn-info") as HTMLElement;
+let dragCount = 0;
 
 playerGameBoard.shipList.push(
   submarine,
