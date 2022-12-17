@@ -20,7 +20,7 @@ export default function gameBoardFactory(): gameBoard {
     return (ship.shipDirection = direction);
   };
 
-  const getShipPosition = (shipId: number) => {
+  const getShipPosition = (shipId: string):number[] => {
     const shipPosition: Array<number> = [];
     gameBoard.forEach((item, index) => {
       if (item === shipId) {

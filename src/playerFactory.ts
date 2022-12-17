@@ -21,7 +21,7 @@ export interface gameBoard {
     ship: ships,
     initialPosition: number
   ) => number[] | string[] | "Not Valid";
-  getShipPosition: (id: number) => number[];
+  getShipPosition: (id: string) => number[];
   receiveAttack: (coordinate: number) => "Missed" | number;
   hasEveryShipSunk: () => boolean;
   isShipHit: () => boolean;
