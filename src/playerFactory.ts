@@ -13,10 +13,7 @@ export interface gameBoard {
   gameBoard: Array<number> | Array<string>;
   shipList: Array<ships>;
   hitCoordinates: Array<number>;
-  setShipDirection: (
-    ship: ships,
-    direction: shipDirection
-  ) => shipDirection;
+  setShipDirection: (ship: ships, direction: shipDirection) => shipDirection;
   placeShip: (
     ship: ships,
     initialPosition: number
@@ -55,6 +52,7 @@ export default function playerFactory(name: string) {
       randomPosition = Math.floor(Math.random() * 100);
     }
     oppositionGameBoard.hitCoordinates.push(randomPosition);
+    console.log("random positon", randomPosition);
     return oppositionGameBoard.receiveAttack(randomPosition);
   };
   const randomlyPlaceShip = () => {

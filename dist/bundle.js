@@ -760,7 +760,8 @@ function startGame() {
         boardTwo.classList.add("disabled");
         turnInfo.textContent = "Computer's Turn";
         setTimeout(() => {
-            pcPlayer.randomAttack(playerGameBoard);
+            const attackResult = pcPlayer.randomAttack(playerGameBoard);
+            console.log("attacked positon", attackResult);
             (0, renderGameBoard_1.default)(boardOne, gameBoard);
             isGameOver(playerGameBoard, pcPlayer);
             if (!playerGameBoard.isShipHit()) {
@@ -772,6 +773,17 @@ function startGame() {
             else {
                 loopRandomAttack();
             }
+            // if (attackResult === "Missed") {
+            //   turnCount = 0;
+            //   turnInfo.textContent = "Your Turn";
+            //   boardTwo.classList.remove("disabled");
+            //   boardOne.classList.add("disabled");
+            // } else {
+            //   console.log("aaaaa", attackResult + 1);
+            //   pcPlayer.attack(attackResult + 1, playerGameBoard);
+            //   renderGameBoard(boardOne, gameBoard);
+            //   isGameOver(playerGameBoard, pcPlayer);
+            // }
         }, 800);
     }
     if (turnCount === 0) {
@@ -911,6 +923,7 @@ function playerFactory(name) {
             randomPosition = Math.floor(Math.random() * 100);
         }
         oppositionGameBoard.hitCoordinates.push(randomPosition);
+        console.log("random positon", randomPosition);
         return oppositionGameBoard.receiveAttack(randomPosition);
     };
     const randomlyPlaceShip = () => {

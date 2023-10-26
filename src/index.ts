@@ -70,7 +70,8 @@ function startGame() {
     boardTwo.classList.add("disabled");
     turnInfo.textContent = "Computer's Turn";
     setTimeout(() => {
-      pcPlayer.randomAttack(playerGameBoard);
+      const attackResult = pcPlayer.randomAttack(playerGameBoard);
+      console.log("attacked positon", attackResult);
       renderGameBoard(boardOne, gameBoard);
       isGameOver(playerGameBoard, pcPlayer);
       if (!playerGameBoard.isShipHit()) {
@@ -81,13 +82,27 @@ function startGame() {
       } else {
         loopRandomAttack();
       }
+      // if (attackResult === "Missed") {
+      //   turnCount = 0;
+      //   turnInfo.textContent = "Your Turn";
+      //   boardTwo.classList.remove("disabled");
+      //   boardOne.classList.add("disabled");
+      // } else {
+      //   console.log("aaaaa", attackResult + 1);
+      //   pcPlayer.attack(attackResult + 1, playerGameBoard);
+      //   renderGameBoard(boardOne, gameBoard);
+      //   isGameOver(playerGameBoard, pcPlayer);
+      // }
     }, 800);
   }
 
   if (turnCount === 0) {
-    boardTwo.addEventListener("click", (e:Event ) => {
+    boardTwo.addEventListener("click", (e: Event) => {
       let { isTurnOver } = playerA;
-      playerA.attack(Number((e.target as HTMLDivElement).id), pcPlayerGameBoard);
+      playerA.attack(
+        Number((e.target as HTMLDivElement).id),
+        pcPlayerGameBoard
+      );
       renderGameBoard(boardTwo, pcGameBoard, true);
       isGameOver(pcPlayerGameBoard, playerA);
       boardOne.classList.add("disabled");
@@ -108,15 +123,21 @@ pcPlayer.randomlyPlaceShip();
 renderGameBoard(boardTwo, pcGameBoard, true);
 
 if (!hasGameStarted) {
-  const initialMessage = document.querySelector(".initial-message") as HTMLElement;
+  const initialMessage = document.querySelector(
+    ".initial-message"
+  ) as HTMLElement;
   const board = initialMessage.querySelector(".board") as HTMLElement;
   const ships = initialMessage.querySelectorAll(".ship");
-  const randomButton = initialMessage.querySelector(".btn-secondary") as HTMLInputElement;
-  const instructionBtn = document.querySelector(".instruction-button") as HTMLInputElement;
+  const randomButton = initialMessage.querySelector(
+    ".btn-secondary"
+  ) as HTMLInputElement;
+  const instructionBtn = document.querySelector(
+    ".instruction-button"
+  ) as HTMLInputElement;
   const overlay = initialMessage.querySelector(".overlay") as HTMLElement;
   const closeIcon = initialMessage.querySelector(".close-icon") as HTMLElement;
   const draggableShipList = document.querySelectorAll(".ship");
-  let draggedShip:Array<ships> | null = null;
+  let draggedShip: Array<ships> | null = null;
   body.classList.add("place-ship");
 
   renderGameBoard(board, gameBoard);
@@ -129,7 +150,7 @@ if (!hasGameStarted) {
     startGame();
   });
   ships.forEach((ship) => {
-    ship.addEventListener("click", (e:Event) => {
+    ship.addEventListener("click", (e: Event) => {
       e.stopPropagation();
       ship.classList.toggle("vertical");
       let rotatedShip = playerGameBoard.shipList.filter(
@@ -165,8 +186,11 @@ if (!hasGameStarted) {
       let shipToBeRemoved = initialMessage.querySelector(
         `.${draggedShip && draggedShip[0].id}`
       );
-      if(draggedShip){
-        playerGameBoard.placeShip(draggedShip[0], Number((e.target as HTMLElement).id));
+      if (draggedShip) {
+        playerGameBoard.placeShip(
+          draggedShip[0],
+          Number((e.target as HTMLElement).id)
+        );
       }
       if (playerGameBoard.isValidPosition()) {
         shipToBeRemoved?.parentElement?.remove();
