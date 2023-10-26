@@ -9,11 +9,11 @@ describe("ship object", () => {
   test("get hit location", () => {
     const ship = shipFactory("submarine");
     expect(ship.hit(15)).toStrictEqual(15);
-  });
+  }); 
   test("check horizontally placed ship is sunk", () => {
     const ship = shipFactory("destroyer");
     ship.hit(1);
     ship.hit(2);
-    expect(ship.isSunk("destroyer")).toBe(true);
+    expect(ship.isSunk()).toBe(true);
   });
 });

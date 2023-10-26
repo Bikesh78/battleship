@@ -2,14 +2,17 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
-  devtool: "inline-source-map",
+  entry: "./src/index.ts",
+  devtool: "source-map",
   devServer: {
     static: "./dist",
   },
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
+  },
+  resolve: {
+    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
   },
   module: {
     rules: [
@@ -32,6 +35,10 @@ module.exports = {
           "sass-loader",
         ],
       },
+      // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+      { test: /\.tsx?$/, loader: "ts-loader" },
+      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+      { test: /\.js$/, loader: "source-map-loader" },
     ],
   },
 };
